@@ -25,23 +25,29 @@ function App() {
   // Intersection Observer for scroll animations
   useEffect(() => {
     const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
+      threshold: 0.15,
+      rootMargin: '0px 0px -100px 0px'
     };
 
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('animate-fade-in');
+          // Add staggered delay for multiple elements in the same section
+          setTimeout(() => {
+            entry.target.classList.add('animate-fade-in');
+            entry.target.classList.remove('opacity-0');
+          }, index * 150);
         }
       });
     }, observerOptions);
 
-    // Small delay to ensure DOM is ready
+    // Wait for DOM to be ready
     const timer = setTimeout(() => {
       const elementsToAnimate = document.querySelectorAll('.fade-in-on-scroll');
-      elementsToAnimate.forEach(el => observer.observe(el));
-    }, 100);
+      elementsToAnimate.forEach(el => {
+        observer.observe(el);
+      });
+    }, 500);
 
     return () => {
       clearTimeout(timer);
@@ -140,11 +146,11 @@ function App() {
                 <span className="typewriter">{displayedText}</span>
                 <span className="cursor animate-pulse">|</span>
               </h1>
-              <h2 className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-6 fade-in-on-scroll opacity-0">Computer Science Student</h2>
-              <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl fade-in-on-scroll opacity-0">
+              <h2 className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-6 fade-in-on-scroll opacity-0 transform translate-y-8">Computer Science Student</h2>
+              <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl fade-in-on-scroll opacity-0 transform translate-y-8">
                 Active college student at Bina Nusantara University, focused on improving and learning new things through collaborating with others.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start fade-in-on-scroll opacity-0">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start fade-in-on-scroll opacity-0 transform translate-y-8">
                 <button onClick={() => scrollToSection('contact')} className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-all duration-300 hover:transform hover:scale-105 hover:shadow-lg">
                   Get In Touch
                 </button>
@@ -153,7 +159,7 @@ function App() {
                 </button>
               </div>
             </div>
-            <div className="flex justify-center lg:justify-end fade-in-on-scroll opacity-0">
+            <div className="flex justify-center lg:justify-end fade-in-on-scroll opacity-0 transform translate-y-8">
               <div className="relative">
                 <div className="absolute inset-0 bg-blue-600 dark:bg-blue-400 rounded-full blur-2xl opacity-20 animate-pulse"></div>
                 <img 
@@ -170,12 +176,12 @@ function App() {
       {/* About Section */}
       <section id="about" className="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 fade-in-on-scroll opacity-0">
+          <div className="text-center mb-16 fade-in-on-scroll opacity-0 transform translate-y-8">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">About Me</h2>
             <p className="text-lg text-gray-600 dark:text-gray-300">Getting to know me better</p>
           </div>
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12 fade-in-on-scroll opacity-0">
+            <div className="text-center mb-12 fade-in-on-scroll opacity-0 transform translate-y-8">
               <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
                 I'm a passionate Computer Science student at Bina Nusantara University, specializing in Software Engineering. 
                 My journey in technology is driven by a genuine curiosity to understand how things work and a desire to create 
@@ -187,16 +193,16 @@ function App() {
                 and personal growth.
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 fade-in-on-scroll opacity-0">
-              <div className="flex items-center justify-center md:justify-start space-x-3 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg transition-all duration-300 hover:transform hover:scale-105 hover:shadow-lg">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="flex items-center justify-center md:justify-start space-x-3 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg transition-all duration-300 hover:transform hover:scale-105 hover:shadow-lg fade-in-on-scroll opacity-0 transform translate-y-8">
                 <MapPin className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                 <span className="text-gray-700 dark:text-gray-300">Gading Serpong, Tangerang</span>
               </div>
-              <div className="flex items-center justify-center md:justify-start space-x-3 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg transition-all duration-300 hover:transform hover:scale-105 hover:shadow-lg">
+              <div className="flex items-center justify-center md:justify-start space-x-3 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg transition-all duration-300 hover:transform hover:scale-105 hover:shadow-lg fade-in-on-scroll opacity-0 transform translate-y-8">
                 <Users className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                 <span className="text-gray-700 dark:text-gray-300">Computer Science Student</span>
               </div>
-              <div className="flex items-center justify-center md:justify-start space-x-3 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg transition-all duration-300 hover:transform hover:scale-105 hover:shadow-lg">
+              <div className="flex items-center justify-center md:justify-start space-x-3 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg transition-all duration-300 hover:transform hover:scale-105 hover:shadow-lg fade-in-on-scroll opacity-0 transform translate-y-8">
                 <MessageCircle className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                 <span className="text-gray-700 dark:text-gray-300">Bahasa Indonesia, English</span>
               </div>
@@ -208,13 +214,13 @@ function App() {
       {/* Experience Section */}
       <section id="experience" className="py-20 bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 fade-in-on-scroll opacity-0">
+          <div className="text-center mb-16 fade-in-on-scroll opacity-0 transform translate-y-8">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Experience</h2>
             <p className="text-lg text-gray-600 dark:text-gray-300">My professional journey</p>
           </div>
           <div className="max-w-4xl mx-auto">
             <div className="space-y-8">
-              <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-md fade-in-on-scroll opacity-0 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl">
+              <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-md fade-in-on-scroll opacity-0 transform translate-y-8 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                   <div>
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Winner - Best Booth</h3>
@@ -225,7 +231,7 @@ function App() {
                 <p className="text-gray-600 dark:text-gray-300">Recognized for outstanding presentation and innovative approach in showcasing biological concepts through virtual exhibition format.</p>
               </div>
 
-              <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-md fade-in-on-scroll opacity-0 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl">
+              <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-md fade-in-on-scroll opacity-0 transform translate-y-8 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                   <div>
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Participant</h3>
@@ -236,7 +242,7 @@ function App() {
                 <p className="text-gray-600 dark:text-gray-300">Participated in a comprehensive project-based learning program focused on practical application of academic knowledge in real-world scenarios.</p>
               </div>
 
-              <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-md fade-in-on-scroll opacity-0 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl">
+              <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-md fade-in-on-scroll opacity-0 transform translate-y-8 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                   <div>
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Manager - Streaming Division</h3>
@@ -247,7 +253,7 @@ function App() {
                 <p className="text-gray-600 dark:text-gray-300">Leading the streaming division, coordinating content creation strategies and managing team operations to enhance gaming community engagement.</p>
               </div>
 
-              <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-md fade-in-on-scroll opacity-0 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl">
+              <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-md fade-in-on-scroll opacity-0 transform translate-y-8 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                   <div>
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Activist</h3>
@@ -265,12 +271,12 @@ function App() {
       {/* Education Section */}
       <section id="education" className="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 fade-in-on-scroll opacity-0">
+          <div className="text-center mb-16 fade-in-on-scroll opacity-0 transform translate-y-8">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Education</h2>
             <p className="text-lg text-gray-600 dark:text-gray-300">My academic background</p>
           </div>
           <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow-md fade-in-on-scroll opacity-0 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl">
+            <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow-md fade-in-on-scroll opacity-0 transform translate-y-8 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl">
               <div className="w-12 h-12 bg-blue-600 dark:bg-blue-500 rounded-lg flex items-center justify-center mb-4">
                 <Users className="w-6 h-6 text-white" />
               </div>
@@ -280,7 +286,7 @@ function App() {
               <p className="text-gray-600 dark:text-gray-300">Currently pursuing a degree in Computer Science with specialization in Software Engineering, focusing on modern development practices and collaborative software development.</p>
             </div>
 
-            <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow-md fade-in-on-scroll opacity-0 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl">
+            <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow-md fade-in-on-scroll opacity-0 transform translate-y-8 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl">
               <div className="w-12 h-12 bg-blue-600 dark:bg-blue-500 rounded-lg flex items-center justify-center mb-4">
                 <Users className="w-6 h-6 text-white" />
               </div>
@@ -296,12 +302,12 @@ function App() {
       {/* Skills Section */}
       <section id="skills" className="py-20 bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 fade-in-on-scroll opacity-0">
+          <div className="text-center mb-16 fade-in-on-scroll opacity-0 transform translate-y-8">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Skills</h2>
             <p className="text-lg text-gray-600 dark:text-gray-300">What I bring to the table</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-md text-center fade-in-on-scroll opacity-0 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl">
+            <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-md text-center fade-in-on-scroll opacity-0 transform translate-y-8 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl">
               <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600 rounded-lg flex items-center justify-center mx-auto mb-4 shadow-lg">
                 <Lightbulb className="w-8 h-8 text-white" />
               </div>
@@ -309,7 +315,7 @@ function App() {
               <p className="text-gray-600 dark:text-gray-300">Analytical approach to breaking down complex challenges into manageable solutions through systematic thinking and creative problem-solving techniques.</p>
             </div>
 
-            <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-md text-center fade-in-on-scroll opacity-0 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl">
+            <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-md text-center fade-in-on-scroll opacity-0 transform translate-y-8 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl">
               <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600 rounded-lg flex items-center justify-center mx-auto mb-4 shadow-lg">
                 <MessageCircle className="w-8 h-8 text-white" />
               </div>
@@ -317,7 +323,7 @@ function App() {
               <p className="text-gray-600 dark:text-gray-300">Strong verbal and written communication skills, enabling effective collaboration and clear presentation of ideas across diverse teams and audiences.</p>
             </div>
 
-            <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-md text-center fade-in-on-scroll opacity-0 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl">
+            <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-md text-center fade-in-on-scroll opacity-0 transform translate-y-8 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl">
               <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600 rounded-lg flex items-center justify-center mx-auto mb-4 shadow-lg">
                 <Users className="w-8 h-8 text-white" />
               </div>
@@ -325,7 +331,7 @@ function App() {
               <p className="text-gray-600 dark:text-gray-300">Experience in leading teams and managing projects, with focus on inspiring others and creating environments that foster growth and innovation.</p>
             </div>
 
-            <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-md text-center fade-in-on-scroll opacity-0 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl">
+            <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-md text-center fade-in-on-scroll opacity-0 transform translate-y-8 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl">
               <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600 rounded-lg flex items-center justify-center mx-auto mb-4 shadow-lg">
                 <Handshake className="w-8 h-8 text-white" />
               </div>
@@ -339,13 +345,13 @@ function App() {
       {/* Contact Section */}
       <section id="contact" className="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 fade-in-on-scroll opacity-0">
+          <div className="text-center mb-16 fade-in-on-scroll opacity-0 transform translate-y-8">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Get In Touch</h2>
             <p className="text-lg text-gray-600 dark:text-gray-300">Let's connect and collaborate</p>
           </div>
           <div className="max-w-4xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-              <div className="text-center fade-in-on-scroll opacity-0 transition-all duration-300 hover:transform hover:scale-105">
+              <div className="text-center fade-in-on-scroll opacity-0 transform translate-y-8 transition-all duration-300 hover:transform hover:scale-105">
                 <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600 rounded-lg flex items-center justify-center mx-auto mb-4 shadow-lg">
                   <Mail className="w-8 h-8 text-white" />
                 </div>
@@ -355,7 +361,7 @@ function App() {
                 </a>
               </div>
 
-              <div className="text-center fade-in-on-scroll opacity-0 transition-all duration-300 hover:transform hover:scale-105">
+              <div className="text-center fade-in-on-scroll opacity-0 transform translate-y-8 transition-all duration-300 hover:transform hover:scale-105">
                 <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600 rounded-lg flex items-center justify-center mx-auto mb-4 shadow-lg">
                   <Phone className="w-8 h-8 text-white" />
                 </div>
@@ -365,7 +371,7 @@ function App() {
                 </a>
               </div>
 
-              <div className="text-center fade-in-on-scroll opacity-0 transition-all duration-300 hover:transform hover:scale-105">
+              <div className="text-center fade-in-on-scroll opacity-0 transform translate-y-8 transition-all duration-300 hover:transform hover:scale-105">
                 <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600 rounded-lg flex items-center justify-center mx-auto mb-4 shadow-lg">
                   <MapPin className="w-8 h-8 text-white" />
                 </div>
@@ -374,7 +380,7 @@ function App() {
               </div>
             </div>
 
-            <div className="text-center bg-gray-50 dark:bg-gray-800 p-8 rounded-lg fade-in-on-scroll opacity-0 transition-all duration-300 hover:shadow-lg">
+            <div className="text-center bg-gray-50 dark:bg-gray-800 p-8 rounded-lg fade-in-on-scroll opacity-0 transform translate-y-8 transition-all duration-300 hover:shadow-lg">
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">Connect with me</h3>
               <div className="flex justify-center space-x-6">
                 <a href="https://instagram.com/hubertus.kenneth" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-600 rounded-lg flex items-center justify-center text-white hover:transform hover:scale-110 transition-all duration-300 shadow-lg">

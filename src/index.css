@@ -32,12 +32,11 @@
     51%, 100% { opacity: 0; }
   }
 
-  /* Fade in animation - starts invisible */
+  /* Fade in animation - starts invisible with transform */
   .fade-in-on-scroll {
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translateY(50px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
   
   /* Animation when element comes into view */
@@ -45,13 +44,6 @@
     opacity: 1 !important;
     transform: translateY(0) !important;
   }
-
-  /* Staggered animation delays for multiple elements */
-  .fade-in-on-scroll:nth-child(1) { transition-delay: 0.1s; }
-  .fade-in-on-scroll:nth-child(2) { transition-delay: 0.2s; }
-  .fade-in-on-scroll:nth-child(3) { transition-delay: 0.3s; }
-  .fade-in-on-scroll:nth-child(4) { transition-delay: 0.4s; }
-  .fade-in-on-scroll:nth-child(5) { transition-delay: 0.5s; }
 
   /* Dark mode transitions */
   * {
@@ -68,11 +60,6 @@
   .hover-lift:hover {
     transform: translateY(-4px);
     box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-  }
-
-  /* Gradient backgrounds */
-  .gradient-bg {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   }
 
   /* Custom scrollbar */
@@ -135,6 +122,10 @@ a:focus {
     opacity: 1;
     transform: none;
   }
+  
+  .cursor {
+    animation: none;
+  }
 }
 
 /* High contrast mode support */
@@ -165,4 +156,16 @@ a:focus {
   .text-white {
     color: black !important;
   }
+}
+
+/* Ensure elements start invisible for animation */
+.fade-in-on-scroll {
+  opacity: 0 !important;
+  transform: translateY(50px) !important;
+}
+
+/* Override for when animation is triggered */
+.fade-in-on-scroll.animate-fade-in {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
