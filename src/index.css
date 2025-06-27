@@ -6,6 +6,12 @@
   html {
     scroll-behavior: smooth;
   }
+  
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
 
 @layer components {
@@ -18,6 +24,7 @@
     display: inline-block;
     animation: blink 1s infinite;
     color: #2563eb;
+    margin-left: 2px;
   }
   
   @keyframes blink {
@@ -25,23 +32,64 @@
     51%, 100% { opacity: 0; }
   }
 
-  /* Fade in animation */
+  /* Fade in animation - starts invisible */
   .fade-in-on-scroll {
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
   
+  /* Animation when element comes into view */
   .animate-fade-in {
     opacity: 1 !important;
     transform: translateY(0) !important;
   }
 
+  /* Staggered animation delays for multiple elements */
+  .fade-in-on-scroll:nth-child(1) { transition-delay: 0.1s; }
+  .fade-in-on-scroll:nth-child(2) { transition-delay: 0.2s; }
+  .fade-in-on-scroll:nth-child(3) { transition-delay: 0.3s; }
+  .fade-in-on-scroll:nth-child(4) { transition-delay: 0.4s; }
+  .fade-in-on-scroll:nth-child(5) { transition-delay: 0.5s; }
+
   /* Dark mode transitions */
   * {
-    transition-property: background-color, border-color, color, fill, stroke;
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
+  }
+
+  /* Enhanced hover effects */
+  .hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  }
+
+  /* Gradient backgrounds */
+  .gradient-bg {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100 dark:bg-gray-800;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-400 dark:bg-gray-600 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-500 dark:bg-gray-500;
   }
 }
 
@@ -53,5 +101,68 @@
   
   .mobile-menu.active {
     display: block;
+  }
+}
+
+/* Loading animation for images */
+img {
+  transition: opacity 0.3s ease;
+}
+
+img[src=""] {
+  opacity: 0;
+}
+
+/* Focus styles for accessibility */
+button:focus,
+a:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Reduced motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .fade-in-on-scroll {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .text-gray-600 {
+    @apply text-gray-900 dark:text-gray-100;
+  }
+  
+  .text-gray-500 {
+    @apply text-gray-800 dark:text-gray-200;
+  }
+}
+
+/* Print styles */
+@media print {
+  .fixed {
+    position: static !important;
+  }
+  
+  .bg-gradient-to-br {
+    background: white !important;
+  }
+  
+  .dark\:bg-gray-900 {
+    background: white !important;
+  }
+  
+  .text-white {
+    color: black !important;
   }
 }
